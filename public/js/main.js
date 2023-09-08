@@ -16,9 +16,27 @@ try{
     method:'POST',
     body 
   })
-  const text = await response.text()
+  const text = await response.json()
 
   console.log( 'text:', text )
+  const list= document.createElement('ul')
+  text.array.forEach(d => {
+    const item = document.createElement('li')
+    item.innerHTML=` <b>model</b> : ${d.model}, <b>mpg</b>: ${d.mpg}, <b>year</b>: ${d.year}`
+    list.appendChild(item)
+  })
+
+ // list.innerHTML=data
+  //map is going to return a new array which we are going through using .foreach 
+  // which will return the same array with some modifications to it. 
+  /*.map(d=>d.model)
+  .map(d=> d[0].toUpperCase(0) + d.slice(1))
+  .foreach(d=> {
+    const li= document.createElement('li')
+    list.appendChild(li)
+  })
+*/
+  document.body.appendChild(list)
 }
 catch(err){
   console.log(err.message);
