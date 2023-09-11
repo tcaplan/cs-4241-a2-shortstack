@@ -10,17 +10,21 @@ function displaySchedule(data) {
         Sa: "Saturday"
     };
       
-    var table = document.getElementById('dataView')
-    table.textContent = '' // clear the table
+    const display = document.getElementById('dataView')
+    display.textContent = '' // clear the table
       
     // create the weekday headers
-    var row = table.insertRow(-1);
+    const headers = document.createElement('div')
+    headers.className = "grid-row displayRow"
+    display.appendChild(headers)
+    let col = 1
     Object.keys(daysOfWeek).forEach(key => {
-        var headerCell = document.createElement("th");
+        var headerCell = document.createElement("div");
+        headerCell.style.gridColumn = col + ' / ' + (col++ + 1)
         headerCell.innerHTML = daysOfWeek[key]
         headerCell.name = key
         headerCell.className = "displayHeader"
-        row.appendChild(headerCell) 
+        headers.appendChild(headerCell) 
     });
 
     // organize by day / time
@@ -35,7 +39,7 @@ function displaySchedule(data) {
       };
       
       
-      // organize the data by time and day
+    // organize the data by time and day
     for(obj of data) {
         Object.values(obj.Days).forEach( day => {
 
@@ -63,11 +67,27 @@ function displaySchedule(data) {
         let row = 1
         let r
         for(c of classes) {
-            if(table.rows.length <= row) {
-                r = table.insertRow(-1)
-                Object.values(schedule).forEach(_ => r.insertCell(-1))
+            let cell
+            // add a row if needed
+            if(display.childElementCount <= row) {
+                r = document.createElement('div')
+                r.className = "grid-row displayRow"
+                display.appendChild(r)
+                // add all the cells in the row
+                while(r.childElementCount <= day) {
+                    cell = document.createElement('div')
+                    cell.className = "displayCell"
+                    cell.style.gridColumn = day + ' / ' + (day + 1)
+                    cell.appendChild(classDisplay(emptyClass))
+                    display.childNodes[row].appendChild(cell)
+                }
             }
-            table.rows[row].cells[day].appendChild(classDisplay(c))
+            cell = display.childNodes[row].childNodes[day]
+            while(cell.childElementCount > 0) {
+                cell.removeChild(cell.childNodes[0])
+            }
+            cell.appendChild(classDisplay(c))
+            display.childNodes[row].appendChild(cell)
             row++
         }
         day++;
@@ -125,4 +145,12 @@ const showClass = () => {
         display.appendChild(classDisplay(JSON.parse(data), true))
     }
 
+}
+
+const emptyClass = { 'Name': '', 
+    'Code': '',
+    'StartTime' : '',
+    'EndTime': '',
+    'Days': {},
+    'Length': '' 
 }

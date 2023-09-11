@@ -119,8 +119,14 @@ fieldset label {
 #dataView {
   margin: 0 auto;
   margin-bottom: 50px;
+  display: grid;
 }
 
-#dataView th {
-  padding: 5px 5px 10px 10px;
+.displayRow, .displayCell {
+  border: white 1px solid;
+}
+
+.displayHeader {
+  border: white 1px solid;
+  padding: 10px;
 }
