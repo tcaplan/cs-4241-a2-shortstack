@@ -106,7 +106,7 @@ function classDisplay(classObj) {
     box.className = 'classDisplay'
     
     const add = (tag, inner) => {
-        if(typeof inner === "undefined") {
+        if(inner === "") {
             box.appendChild(document.createElement('br'))
             return box
         }
@@ -116,8 +116,9 @@ function classDisplay(classObj) {
     }
     
     add('h2', classObj.Name)
-    add('p', classObj.code)
+    add('p', classObj.Code)
     add('p', classObj.StartTime + " - " + classObj.EndTime)
+    add('p', Object.values(classObj.Days).toString())
     add('p', classObj.Length + ` hour${classObj.Length === 1 ? '' : 's'}`)
 
     return box

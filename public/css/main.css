@@ -31,6 +31,8 @@ form {
   text-align: center;
   padding: 10px;
   padding-bottom: 20px;
+  text-align: center;
+  display: inline-block;
 }
 
 .grid-container {
@@ -63,14 +65,6 @@ form {
   grid-column: 2 / 2;
 }
 
-section {
-  text-align: center;
-}
-
-article {
-  text-align: center;
-}
-
 section article {
   margin-bottom: 50px;
 }
@@ -95,6 +89,10 @@ fieldset label {
 }
 
 .classDisplay h2 {
+  font-size: larger;
+}
+
+.classDisplay h3 {
   font-size: large;
 }
 

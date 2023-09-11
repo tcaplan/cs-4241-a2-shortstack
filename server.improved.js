@@ -44,6 +44,8 @@ const handlePost = function( request, response ) {
     handleGetAll( request, response )
   } else if(request.url === '/remove') {
     handleRemove( request, response )
+  } else if(request.url === '/modify') {
+    handleModify( request, response )
   } else {
     console.log('FAIL - requested: ' + request.url)
   }
@@ -53,7 +55,7 @@ const handleGetAll = function(request, response) {
     request.on( 'data', () => {})
     request.on( 'end', function() {          
       response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-      console.log('getAll - sending: ' + JSON.stringify(appdata))
+      // console.log('getAll - sending: ' + JSON.stringify(appdata))
       response.end(JSON.stringify(appdata))
     })
 }
@@ -66,7 +68,7 @@ const handleSubmit = function(request, response) {
     })
 
     request.on( 'end', function() {
-      console.log( 'submit - received: ' + JSON.parse( dataString ) )
+      // console.log( 'submit - received: ' + JSON.parse( dataString ) )
   
       json = JSON.parse( dataString )
         
@@ -77,22 +79,19 @@ const handleSubmit = function(request, response) {
       if(error.errors === false) { // no errors
 
         // calculate the derived field (length of class)
-        const start = new Date('1970-01-01T' + json.StartTime + ":00")
-        const end = new Date('1970-01-01T' + json.EndTime + ":00")
-        const msPerHour = 1000 * 60 * 60
-        json['Length'] = Math.round(((end-start) / msPerHour) * 100) / 100
+        json['Length'] = calcDerivedLength(json.StartTime, json.EndTime)
 
         // add to the server data
         appdata.push(
           json
         )
 
-        console.log('submit - new data: ' + JSON.stringify(appdata))
+        // console.log('submit - new data: ' + JSON.stringify(appdata))
 
         response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
         response.end(JSON.stringify({}))
       } else { // send back error message
-        console.log('submit - error: ' + JSON.stringify(error))
+        // console.log('submit - error: ' + JSON.stringify(error))
         response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
         response.end( JSON.stringify(error) )
       }
@@ -107,7 +106,7 @@ const handleRemove = function(request, response) {
     })
 
     request.on( 'end', function() {
-      console.log( 'remove - received: ' + JSON.parse( dataString ) )
+      // console.log( 'remove - received: ' + JSON.parse( dataString ) )
   
       json = JSON.parse( dataString )
         
@@ -128,7 +127,7 @@ const handleRemove = function(request, response) {
             
             response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
             response.end('success')
-            console.log('success')
+            console.log('remove - success')
             break
         } else {
             i++
@@ -140,6 +139,58 @@ const handleRemove = function(request, response) {
         response.end('fail')
         console.log('failed to remove')
     }
+    })
+}
+
+const handleModify = function(request, response) {
+    let dataString = ''
+
+    request.on( 'data', function( data ) {
+        dataString += data 
+    })
+
+    request.on( 'end', function() {
+      console.log( 'modify - received: ' +  dataString )
+  
+      json = JSON.parse( dataString )
+        
+      prev = json.prev
+      data = json.new
+
+      // validate the new values
+      const error = validate(data);
+
+      if(error.errors === false) {
+        // find the data to modify
+        let i = 0;
+        const max = appdata.length
+        for(obj of appdata) {
+            if(JSON.stringify(obj) === prev) {
+
+                obj.Name = data.Name
+                obj.Code = data.Code
+                obj.StartTime = data.StartTime
+                obj.EndTime = data.EndTime
+                obj.Length = calcDerivedLength(data.StartTime, data.EndTime)
+                
+                response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+                response.end(JSON.stringify({}))
+                console.log('modify - success')
+                break
+            } else {
+                i++
+            }
+        }
+        if(i >= max) {
+            response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+            response.end(JSON.stringify(error))
+            console.log('failed to modify')
+        }
+      } else { // send back error message
+        console.log('modify - error: ' + JSON.stringify(error))
+        response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+        response.end( JSON.stringify(error) )
+      }
     })
 }
 
@@ -202,5 +253,13 @@ const validate = data => {
   }
   return error;
 };
+
+const calcDerivedLength = (start, end) => {
+    // calculate the derived field (length of class)
+    const s = new Date('1970-01-01T' + start + ":00")
+    const e = new Date('1970-01-01T' + end + ":00")
+    const msPerHour = 1000 * 60 * 60
+    return Math.round(((e-s) / msPerHour) * 100) / 100
+}
 
 server.listen( process.env.PORT || port )
