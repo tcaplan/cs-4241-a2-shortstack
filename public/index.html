@@ -4,15 +4,101 @@
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
+    <script src="js/display.js"></script>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://fonts.google.com/specimen/Courier+Prime?query=courier">
+
     
     <!-- get rid of favicon error -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+    <link rel="shortcut icon" href="data:image/x-icon;" type="image/x-icon"> 
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+
+    <header>
+      <h1>College Schedule Maker</h1>
+    </header>
+
+    <main>
+
+      <section id="leftContent" class="column">
+        <article id="addClass">
+          <h2>Enter New Class</h2>
+          <form>
+            <div class="grid-container">
+              <div class="grid-item">
+                <div class="left">
+                  <label for="className">Class Name</label>
+                  <input type="text" id="className" placeholder="ex: Webware" required>
+                  <p id="classNameWarning" class="warning"></p>
+                </div>
+                <div class="right">
+                  <label for="classCode">Class Code</label>
+                  <input class="right" type="text" id="classCode" placeholder="ex: CS4241">
+                  <p id="classCodeWarning" class="warning"></p>
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="left">
+                  <label for="startTime">Start Time</label>
+                  <input type="time" id="startTime" value="13:00" required>
+                  <p id="startTimeWarning" class="warning"></p>
+                </div>
+                <div class="right">
+                  <label for="startTime">End Time</label>
+                  <input type="time" id="endTime" value="14:00" required>
+                  <p id="endTimeWarning" class="warning"></p>
+                </div>
+              </div>
+              <div class="grid-item">
+                <fieldset>
+                  <legend>Days of the Week</legend>
+                  <label for="monday">Monday</label>
+                  <input type="checkbox" id="monday" value="M">
+                  <label for="tuesday">Tuesday</label>
+                  <input type="checkbox" id="tuesday" value="T">
+                  <label for="wednesday">Wednesday</label>
+                  <input type="checkbox" id="wednesday" value="W">
+                  <label for="thursday">Thursday</label>
+                  <input type="checkbox" id="thursday" value="Th">
+                  <label for="friday">Friday</label>
+                  <input type="checkbox" id="friday" value="F">
+                  <label for="saturday">Saturday</label>
+                  <input type="checkbox" id="saturday" value="Sa">
+                  <label for="sunday">Sunday</label>
+                  <input type="checkbox" id="sunday" value="Su">
+                </fieldset>
+                <p id="daysWarning" class="warning"></p>
+              </div>
+            </div>
+  
+            <button id="submitAdd">submit</button>
+          </form>
+        </article>
+        <article id="removeClass">
+          <h2>Remove A Class</h2>
+          <form>
+            <div class="grid-container">
+              <div class="grid-item">
+                <div class="left">
+                  Choose Class to Remove
+                  <br>
+                  <select id="classSelect"></select>
+                </div>
+                <div class="right">
+                  <div id="singleClassDisplay"></div>
+                </div>
+              </div>
+            </div>
+            <button id="submitRemove">remove</button>
+          </form>
+        </article>
+      </section>
+      <section id="rightContent" class="column">
+        <h2>Current Schedule</h2>
+        <table id="dataView"></table>
+        <table id="dataView2"></table>
+      </section>
+    </main>
+
   </body>
 </html>
