@@ -2,10 +2,6 @@
 body {
   margin: 0;
   font-family: "Courier Prime", monospace;
-  background-color: #9E768F;
-}
-
-body {
   background:rgb(40, 40, 40);
   color:white;
 }
@@ -55,6 +51,7 @@ form {
 
 .grid-item .left {
   float: left;
+  padding-left: 10px;
 }
 
 #leftContent {
