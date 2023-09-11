@@ -1,29 +1,5 @@
-function displayScheduleOld(table, data) {
-    // make the headers
-    var row = table.insertRow(-1);
-    Object.keys( data[0]).forEach(key => {
-      var headerCell = document.createElement("th");
-      headerCell.innerHTML = key
-      row.appendChild(headerCell)
-    });
-
-    // display the data
-    data.forEach(obj => {
-      row = table.insertRow(-1);
-      for (const [key, val] of Object.entries(obj)) {
-        var cell = row.insertCell(-1)
-        if(key === 'Days') {
-          cell.innerHTML = Object.values(val).toString()
-        } else {
-          cell.innerHTML = val
-        }
-      }
-    });
-}
-
 function displaySchedule(data) {
     // make the headers
-
     const daysOfWeek = {
         Su: "Sunday",
         M: "Monday",
@@ -34,7 +10,7 @@ function displaySchedule(data) {
         Sa: "Saturday"
     };
       
-    var table = document.getElementById('dataView2')
+    var table = document.getElementById('dataView')
     table.textContent = '' // clear the table
       
     // create the weekday headers
@@ -97,11 +73,11 @@ function displaySchedule(data) {
         day++;
     })
 
-    console.log(schedule)
+    // console.log(schedule)
 }
 
 // display a singular class cell
-function classDisplay(classObj) {
+function classDisplay(classObj, showDay=false) {
     const box = document.createElement('div');
     box.className = 'classDisplay'
     
@@ -118,7 +94,9 @@ function classDisplay(classObj) {
     add('h2', classObj.Name)
     add('p', classObj.Code)
     add('p', classObj.StartTime + " - " + classObj.EndTime)
-    add('p', Object.values(classObj.Days).toString())
+    if(showDay) {
+        add('p', Object.values(classObj.Days).toString())
+    }
     add('p', classObj.Length + ` hour${classObj.Length === 1 ? '' : 's'}`)
 
     return box
@@ -127,7 +105,13 @@ function classDisplay(classObj) {
 const showClass = () => {
     const data = document.getElementById("classSelect").value
     const display = document.getElementById("singleClassDisplay")
-    display.innerText = ''
+    display.innerText = ""
+    
+    // re-add the legend
+    const legend = document.createElement('legend')
+    legend.innerHTML = "Class to Remove"
+    display.appendChild(legend)
+
     if(typeof data === "undefined" || data === "") {
         display.appendChild(document.createElement('br'))
         let temp1 = document.createElement('p')
@@ -138,7 +122,7 @@ const showClass = () => {
         display.appendChild(temp2) 
         display.appendChild(document.createElement('br')) 
     } else {
-        display.appendChild(classDisplay(JSON.parse(data)))
+        display.appendChild(classDisplay(JSON.parse(data), true))
     }
 
 }

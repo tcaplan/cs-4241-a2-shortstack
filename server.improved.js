@@ -150,46 +150,56 @@ const handleModify = function(request, response) {
     })
 
     request.on( 'end', function() {
-      console.log( 'modify - received: ' +  dataString )
+      // console.log( 'modify - received: ' +  dataString )
   
       json = JSON.parse( dataString )
         
       prev = json.prev
       data = json.new
 
-      // validate the new values
-      const error = validate(data);
-
-      if(error.errors === false) {
-        // find the data to modify
-        let i = 0;
-        const max = appdata.length
-        for(obj of appdata) {
-            if(JSON.stringify(obj) === prev) {
-
-                obj.Name = data.Name
-                obj.Code = data.Code
-                obj.StartTime = data.StartTime
-                obj.EndTime = data.EndTime
-                obj.Length = calcDerivedLength(data.StartTime, data.EndTime)
-                
-                response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-                response.end(JSON.stringify({}))
-                console.log('modify - success')
-                break
-            } else {
-                i++
-            }
+      if(prev === "") { // no classes to modify
+        const error = {
+          'errors': true,
+          'classModifySelect': "No Classes To Modify",
         }
-        if(i >= max) {
-            response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
-            response.end(JSON.stringify(error))
-            console.log('failed to modify')
-        }
-      } else { // send back error message
-        console.log('modify - error: ' + JSON.stringify(error))
+        // console.log('modify - error: ' + JSON.stringify(error))
         response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
         response.end( JSON.stringify(error) )
+      } else {
+        // validate the new values
+        const error = validate(data);
+
+        if(error.errors === false) {
+          // find the data to modify
+          let i = 0;
+          const max = appdata.length
+          for(obj of appdata) {
+              if(JSON.stringify(obj) === prev) {
+
+                  obj.Name = data.Name
+                  obj.Code = data.Code
+                  obj.StartTime = data.StartTime
+                  obj.EndTime = data.EndTime
+                  obj.Length = calcDerivedLength(data.StartTime, data.EndTime)
+                  
+                  response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+                  response.end(JSON.stringify({}))
+                  console.log('modify - success')
+                  break
+              } else {
+                  i++
+              }
+          }
+          if(i >= max) {
+              response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+              response.end(JSON.stringify(error))
+              console.log('failed to modify')
+          }
+        } else { // send back error message
+        //   console.log('modify - error: ' + JSON.stringify(error))
+          response.writeHead( 200, "OK", {'Content-Type': 'text/plain' })
+          response.end( JSON.stringify(error) )
+        }        
       }
     })
 }

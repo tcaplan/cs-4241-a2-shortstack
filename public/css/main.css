@@ -34,6 +34,7 @@ form {
 .grid-container {
   display: grid;
   max-width: fit-content;
+  text-align: center;
 }
 
 .grid-item {
@@ -42,6 +43,11 @@ form {
 
 .grid-item label :not(fieldset) {
   padding-right: 5px;
+}
+
+.grid-row {
+  display: grid;
+  text-align: center;
 }
 
 .grid-item .right {
@@ -58,11 +64,15 @@ form {
   grid-column: 1 / 2;
 }
 
-#rightContent {
-  grid-column: 2 / 2;
+#middleContent {
+  grid-column: 2 / 3;
 }
 
-section article {
+#rightContent {
+  grid-column: 3 / 3;
+}
+
+.classForm {
   margin-bottom: 50px;
 }
 
@@ -102,4 +112,15 @@ fieldset label {
   padding: 10px;
   padding-left: 30px;
   padding-right: 30px;
+}
+
+/* Schedule Display */
+
+#dataView {
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+#dataView th {
+  padding: 5px 5px 10px 10px;
 }
