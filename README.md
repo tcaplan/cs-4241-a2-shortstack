@@ -11,6 +11,8 @@ This application is a class schedule maker that allows users to input their clas
 
 The application includes the use of HTML, CSS, JavaScript, and Node.js functionality, with active communication between the client and the server over the life of a user session.
 
+**IMPORTANT NOTE**: Application was developed using Firefox. During playtesting, Chrome occasionally caused lagging not seen in Firefox during or after development.
+
 My tabular dataset:
 An object array of class information, where each class has:
 1. Name (required)
@@ -26,13 +28,13 @@ An object array of class information, where each class has:
 **Modification Of Data Enabled**: Along with adding and removing data from the server, users are allowed to modify existing data through the modification form.
 
 ## Design/Evaluation Achievements
-**Think-Aloud Protocol**: Ran ___ think-aloud(s) to test the design of the website.
+**Think-Aloud Protocol**: Ran 1 think-aloud(s) to test the design of the website.
 - Prompt: Add 2 of your classes to the schedule, then modify 1 class to have class on a Sunday.
 Student 1:
-1. Last Name:
-2. Problems:
-3. Surprising Comments:
-4. Changes based on feedback:
+1. Last Name: Logan
+2. Problems: Didn't see the classes in the schedule before adding, so having 2 classes with the same name was confusing.
+3. Surprising Comments: Liked the words at the box line for labeling
+4. Changes based on feedback: Expected the classes to be organized positionally by time rather than just sorted. (Would have implemented with more time :( ))
 Student 2:
 1. Last Name:
 2. Problems:
