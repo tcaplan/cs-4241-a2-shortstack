@@ -231,8 +231,8 @@ window.onload = function() {
   const removeDropdown = document.getElementById("classSelect")
   const modifyDropdown = document.getElementById("classModifySelect")
   addClassesTo(removeDropdown)
-  removeDropdown.onclick = showClass
+  removeDropdown.onchange = showClass
   addClassesTo(modifyDropdown)
-  modifyDropdown.onclick = loadClass
+  modifyDropdown.onchange = loadClass
   getAll();
 }
