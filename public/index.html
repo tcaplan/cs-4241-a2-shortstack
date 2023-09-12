@@ -26,7 +26,7 @@
             <input type="text" id="Name" value="your full name here" />
           </td>
         </tr>
-        
+
         <tr>
           <td>
             <label>Birth date:</label>
@@ -38,8 +38,22 @@
     <div id="btn">
       <button id="submit">Submit</button>
       <button id="display">Display info</button>
+      <button id="delete">Delete</button>
       <button id="clear">Clear</button>
     </div>
     <p id="fade">Submission Successful</p>
+    <p id="dell">Deletion Successful: clear the table</p>  
+ 
+    <script>
+     let buttonHere = false;
+      function checkedOnClick(el) {
+        let checkboxlist = document.getElementsByClassName("checkOnce");
+        for (let i = 0; i < checkboxlist.length; i++) {
+          checkboxlist.item(i).checked = false;
+        }
+        el.checked = true;
+       <!-- document.querySelector("#delete").addEventListener("click",del(event));-->
+      }
+    </script>
   </body>
 </html>

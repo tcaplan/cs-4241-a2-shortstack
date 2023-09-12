@@ -7,26 +7,29 @@ body {
 table,
 th,
 td {
-  padding:4.5px;
+  padding: 4.5px;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid white;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
-button{
-  background-color: #BFCBC2;
+button {
+  background-color: #bfcbc2;
   border-radius: 20px;
   border: 2px solid white;
   margin-bottom: 20px;
   transition: all 1s ease-out;
 }
-button:hover{
-  background-color: #006E90;
-   
+button:hover {
+  background-color: #006e90;
 }
 #title {
   text-align: center;
+}
+
+#clear {
+  margin-right: 20px;
 }
 #btn {
   text-align: end;
@@ -35,7 +38,11 @@ button:hover{
 form {
   color: red;
 }
-#fade{
-  color:#73FF00;
+#fade {
+  color: #73ff00;
+  display: none;
+}
+#dell {
+  color: #FC0011;
   display: none;
 }

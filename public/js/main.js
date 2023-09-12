@@ -1,10 +1,4 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
-
 const submit = async function (event) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
   event.preventDefault();
 
   let input = document.querySelectorAll("#Email,#Name,#Birth"),
@@ -13,7 +7,7 @@ const submit = async function (event) {
       Name: input[1].value,
       Birth: input[2].value,
     };
-  //this sends a request to the server
+  
   let response = await fetch("/submit", {
     method: "POST",
     body: JSON.stringify(json),
@@ -22,16 +16,8 @@ const submit = async function (event) {
   document.querySelector("#fade").style.display = "block";
   setTimeout(function () {
     document.querySelector("#fade").style.display = "none";
-  }, 2000);
+  }, 1500);
 };
-
-function age(birth) {
-  let date = new Date(birth);
-  let diff = Date.now() - date.getTime();
-  let date1 = new Date(diff);
-  let age = Math.abs(date1.getUTCFullYear() - 1970);
-  return age;
-}
 
 const display = async function (event) {
   event.preventDefault();
@@ -47,7 +33,6 @@ const display = async function (event) {
   list.appendChild(header);
   let i = 0;
   text.forEach((d) => {
-    i++;
     const year = age(d.Birth);
     const item = document.createElement("tr");
     item.innerHTML = `
@@ -55,26 +40,73 @@ const display = async function (event) {
     <td>${d.Name}</td>
     <td>${d.Birth}</td>
     <td>${year} years old</td>
-    <td>row:${i} <input type="checkbox" name=${i}/></td>
+    <td>row:${i} <input type="checkbox" class="checkOnce" id="C${i}" 
+    onclick="checkedOnClick(this)"/></td>
     `;
+    i++;
     list.appendChild(item);
   });
-
+ 
   document.body.appendChild(list);
-  /*  const ut=document.createElement("div");
-  ut.setAttribute("id","delbtn");
-  ut.innerHTML=`<button>Delete</button>`;*/
-
+ 
+ 
   document.querySelector("#clear").addEventListener("click", function () {
     document.body.removeChild(list);
-    // document.body.remove(ut);
+   //document.body.removeChild(ut);
   });
+ 
+ /*const ut = document.createElement("button");
+ ut.setAttribute("id", "delete");
+ ut.innerHTML = `Delete`;
+ document.body.appendChild(ut);
+
+ document.querySlector("#delete").onclick(del(event));*/
+   
+};
+async function deleterec(event) {
+  event.preventDefault();
+
+  let data;
+  
+  const dis = document.querySelectorAll(".checkOnce");
+  
+  for (let j = 0; j < dis.length; j++) {
+    if (dis[j].checked === true) {
+      data = j;
+    }
+  }
+    let json = {
+      number: data,
+    };
+    let response = await fetch("/delete", {
+      method:'POST',
+      body: JSON.stringify(json)
+    });
+  
+    const text = await response.json();
+   // console.log(text)
+    document.querySelector("#dell").style.display = "block";
+  setTimeout(function () {
+    document.querySelector("#dell").style.display = "none";
+  }, 1500);
+  
 };
 
+
+function age(birth) {
+  let date = new Date(birth);
+  let diff = Date.now() - date.getTime();
+  let date1 = new Date(diff);
+  let age = Math.abs(date1.getUTCFullYear() - 1970);
+  return age;
+}
 
 window.onload = function () {
   const button1 = document.querySelector("#submit");
   const button2 = document.querySelector("#display");
+ const button3 = document.querySelector("#delete");
   button1.onclick = submit;
   button2.onclick = display;
+  button3.onclick = deleterec;
+ 
 };
