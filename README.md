@@ -27,12 +27,15 @@ An object array of class information, where each class has:
 
 ## Design/Evaluation Achievements
 **Think-Aloud Protocol**: Ran 2 think-alouds to test the design of the website.
-- Prompt: Add 2 of your classes to the schedule, then modify 1 class to have class on a Sunday.
+
+Prompt: Add 2 of your classes to the schedule, then modify 1 class to have class on a Sunday.
+
 Student 1:
 1. Last Name: Logan
 2. Problems: Didn't see the classes in the schedule before adding, so having 2 classes with the same name was confusing.
 3. Surprising Comments: Liked the words at the box line for labeling
 4. Changes based on feedback: Expected the classes to be organized positionally by time rather than just sorted. (Would have implemented with more time :( ))
+
 Student 2: 
 1. Last Name: Chang
 2. Problems: The dropdowns needed a second click to update the data shown. (Using Chrome)
