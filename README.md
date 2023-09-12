@@ -34,13 +34,13 @@ Student 1:
 1. Last Name: Logan
 2. Problems: Didn't see the classes in the schedule before adding, so having 2 classes with the same name was confusing.
 3. Surprising Comments: Liked the words at the box line for labeling
-4. Changes based on feedback: Expected the classes to be organized positionally by time rather than just sorted. (Would have implemented with more time :( ))
+4. Changes based on feedback: Expected the classes to be organized positionally by time rather than just sorted. (Would have implemented with more time :( )
 
 Student 2: 
 1. Last Name: Chang
-2. Problems: The dropdowns needed a second click to update the data shown. (Using Chrome)
+2. Problems: The dropdowns needed a second click to update the data shown. (Bug fixed in final submission)
 3. Surprising Comments: Liked the labels, described the form layouts as intuitive
-4. Changes based on feedback: Figure out the bug on Chrome and fix it :( 
+4. Changes based on feedback: Fix the dropdown second click bug. (Bug was only noticed when using arrow keys, fixed in final submission)
 
 ## Baseline Requirements
 ---
